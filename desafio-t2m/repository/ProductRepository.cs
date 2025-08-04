@@ -1,15 +1,21 @@
 using System.Data;
 using Dapper;
 using Npgsql;
-using DesafioT2M.Domain;
+using desafio_t2m.Domain;
 
-public class ProductRepository
+/* Glossario
+IEnumerable: Modelo generico que representa uma coleção de objetos do tipo especificado.
+Task: Variavel que representa uma operação assíncrona que pode ser aguardada.
+readonly: Indica que a propriedade é somente leitura, ou seja, não pode ser modificada após a inicialização.
+*/
+
+public class ProductRepository : IProductRepository
 {
     private readonly string _connectionString;
 
     public ProductRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(configuration));
     }
 
     private IDbConnection CreateConnection()
