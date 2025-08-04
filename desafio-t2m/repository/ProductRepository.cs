@@ -1,7 +1,8 @@
-using System.Data;
 using Dapper;
-using Npgsql;
 using desafio_t2m.Domain;
+using desafio_t2m.Utils;
+using Npgsql;
+using System.Data;
 
 /* Glossario
 IEnumerable: Modelo generico que representa uma coleção de objetos do tipo especificado.
@@ -35,12 +36,21 @@ public class ProductRepository : IProductRepository
         return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
     }
 
+    public async Task<Product?> GetByNameAsync(string name)
+    {
+        using var connection = CreateConnection();
+        var normalizedName = NameNormalizer.Normalize(name);
+
+        var sql = "SELECT * FROM products WHERE normalized_name = @NormalizedName";
+        return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { NormalizedName = normalizedName });
+    }
+
     public async Task<long> AddAsync(Product product)
     {
         using var connection = CreateConnection();
         var sql = @"
-            INSERT INTO products (name, quantity, price)
-            VALUES (@Name, @Quantity, @Price)
+            INSERT INTO products (name, quantity, description, price)
+            VALUES (@Name, @Quantity, @Description, @Price)
             RETURNING id;
         ";
         var id = await connection.ExecuteScalarAsync<long>(sql, product);
