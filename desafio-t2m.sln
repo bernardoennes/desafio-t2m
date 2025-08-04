@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36327.8 d17.14
+VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafio-t2m", "desafio-t2m\desafio-t2m.csproj", "{979AE106-FE09-43B8-8123-E5B9F836DD6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafio_t2m.Tests", "desafio_t2m.Tests\desafio_t2m.Tests.csproj", "{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{979AE106-FE09-43B8-8123-E5B9F836DD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{979AE106-FE09-43B8-8123-E5B9F836DD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{979AE106-FE09-43B8-8123-E5B9F836DD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
