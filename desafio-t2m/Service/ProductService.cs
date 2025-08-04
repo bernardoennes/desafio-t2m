@@ -20,8 +20,7 @@ public class ProductService
 
     public async Task<Product?> GetProductByNameAsync(string name)
     {
-        var normalizedName = NameNormalizer.Normalize(name);
-        return await _repository.GetByNameAsync(normalizedName);
+        return await _repository.GetByNameAsync(name);
     }
 
     public async Task AddProductAsync(ProductDTO productDto)

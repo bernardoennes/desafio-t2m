@@ -7,6 +7,7 @@ public class Product
     public int Quantity { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
+    public string NormalizedName { get; set; } = "";
 
     public Product(string name, int quantity, string description, decimal price)
     {
@@ -14,5 +15,6 @@ public class Product
         Quantity = quantity;
         Description = description;
         Price = price;
+        NormalizedName = Utils.NameNormalizer.Normalize(name);
     }
 }

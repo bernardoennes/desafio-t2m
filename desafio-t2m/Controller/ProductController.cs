@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace desafio_t2m.Controller {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("estoque/[controller]")]
     public class ProductController : ControllerBase {
         private readonly ProductService _service;
 
