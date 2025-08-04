@@ -2,7 +2,6 @@ using desafio_t2m;
 using desafio_t2m.Dto;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net.Http.Json;
 using Xunit;
 
@@ -18,6 +17,16 @@ public class ProductTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task listAllTest()
+    {
+        var response = await _client.GetAsync("/estoque");
+        response.EnsureSuccessStatusCode();
+
+        var produtos = await response.Content.ReadFromJsonAsync<IEnumerable<ProductDTO>>();
+        produtos.Should().NotBeNull();
+    }
+
+    [Fact]
     public async Task AddTest()
     {
         var dto = new ProductDTO { 
@@ -28,16 +37,6 @@ public class ProductTests : IClassFixture<WebApplicationFactory<Program>>
         };
         var response = await _client.PostAsJsonAsync("/estoque", dto);
         response.EnsureSuccessStatusCode();
-    }
-
-    [Fact]
-    public async Task listAllTest()
-    {
-        var response = await _client.GetAsync("/estoque");
-        response.EnsureSuccessStatusCode();
-
-        var produtos = await response.Content.ReadFromJsonAsync<IEnumerable<ProductDTO>>();
-        produtos.Should().NotBeNull();
     }
 
     [Fact]
