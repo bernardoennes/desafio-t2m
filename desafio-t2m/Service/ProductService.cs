@@ -13,17 +13,32 @@ public class ProductService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Product>> GetAllProductsAsync()
+    public async Task<IEnumerable<ProductDTO>> GetAllProducts()
     {
-        return await _repository.GetAllAsync();
+        var products = await _repository.GetAll();
+        return products.Select(p => new ProductDTO
+        {
+            Name = p.Name,
+            Quantity = p.Quantity,
+            Description = p.Description,
+            Price = p.Price
+        });
     }
 
-    public async Task<Product?> GetProductByNameAsync(string name)
+    public async Task<ProductDTO?> GetProductByName(string name)
     {
-        return await _repository.GetByNameAsync(name);
+        var product = await _repository.GetByName(name);
+        if (product is null) return null;
+        return new ProductDTO
+        {
+            Name = product.Name,
+            Quantity = product.Quantity,
+            Description = product.Description,
+            Price = product.Price
+        };
     }
 
-    public async Task AddProductAsync(ProductDTO productDto)
+    public async Task AddProduct(ProductDTO productDto)
     {
         if (string.IsNullOrWhiteSpace(productDto.Name))
             throw new ArgumentException("O Nome do Produto não pode estar vazio.");
@@ -35,30 +50,36 @@ public class ProductService
             productDto.Price
         );
 
-        await _repository.AddAsync(product);
+        await _repository.Add(product);
     }
 
-    public async Task UpdateProductAsync(string name, ProductDTO productDto)
+    public async Task UpdateProduct(string name, ProductDTO productDto)
     {
-        var normalizedName = NameNormalizer.Normalize(name);
-        var existing = await _repository.GetByNameAsync(normalizedName);
+        var existing = await _repository.GetByName(name);
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
-        existing.Name = productDto.Name;
-        existing.Quantity = productDto.Quantity;
-        existing.Price = productDto.Price;
+        var normalizedNewName = NameNormalizer.Normalize(productDto.Name);
+        var existingProduct = await _repository.GetByName(productDto.Name);
 
-        await _repository.UpdateAsync(existing);
+        if (existingProduct != null && existingProduct.Id != existing.Id)
+            throw new InvalidOperationException("Já existe um produto com esse nome.");
+
+    existing.Name = productDto.Name;
+    existing.NormalizedName = normalizedNewName;
+    existing.Quantity = productDto.Quantity;
+    existing.Description = productDto.Description;
+    existing.Price = productDto.Price;
+
+        await _repository.Update(existing);
     }
 
-    public async Task DeleteProductAsync(string name)
+    public async Task DeleteProduct(string name)
     {
-        var normalizedName = NameNormalizer.Normalize(name);
-        var existing = await _repository.GetByNameAsync(normalizedName);
+        var existing = await _repository.GetByName(name);
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
-        await _repository.DeleteAsync(existing.Id);
+        await _repository.Delete(existing.Id);
     }
 }

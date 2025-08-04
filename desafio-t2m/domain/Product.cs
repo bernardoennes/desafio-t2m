@@ -9,6 +9,8 @@ public class Product
     public decimal Price { get; set; }
     public string NormalizedName { get; set; } = "";
 
+    public Product() { }
+
     public Product(string name, int quantity, string description, decimal price)
     {
         Name = name;

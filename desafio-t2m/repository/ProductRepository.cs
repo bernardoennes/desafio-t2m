@@ -22,21 +22,21 @@ public class ProductRepository : IProductRepository
     private IDbConnection CreateConnection()
         => new NpgsqlConnection(_connectionString);
 
-    public async Task<IEnumerable<Product>> GetAllAsync()
+    public async Task<IEnumerable<Product>> GetAll()
     {
         using var connection = CreateConnection();
         var sql = "SELECT * FROM products";
         return await connection.QueryAsync<Product>(sql);
     }
 
-    public async Task<Product?> GetByIdAsync(long id)
+    public async Task<Product?> GetById(long id)
     {
         using var connection = CreateConnection();
         var sql = "SELECT * FROM products WHERE id = @Id";
         return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
     }
 
-    public async Task<Product?> GetByNameAsync(string name)
+    public async Task<Product?> GetByName(string name)
     {
         using var connection = CreateConnection();
         var normalizedName = NameNormalizer.Normalize(name);
@@ -45,7 +45,7 @@ public class ProductRepository : IProductRepository
         return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { NormalizedName = normalizedName });
     }
 
-    public async Task<long> AddAsync(Product product)
+    public async Task<long> Add(Product product)
     {
         using var connection = CreateConnection();
         var sql = @"
@@ -58,7 +58,7 @@ public class ProductRepository : IProductRepository
         return id;
     }
 
-    public async Task<bool> UpdateAsync(Product product)
+    public async Task<bool> Update(Product product)
     {
         using var connection = CreateConnection();
         var sql = @"
@@ -74,7 +74,7 @@ public class ProductRepository : IProductRepository
         return affectedRows > 0;
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> Delete(long id)
     {
         using var connection = CreateConnection();
         var sql = "DELETE FROM products WHERE id = @Id";
