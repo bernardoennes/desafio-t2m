@@ -47,8 +47,8 @@ public class ProductRepository : IProductRepository
     {
         using var connection = CreateConnection();
         var sql = @"
-            INSERT INTO products (barcode, name, normalized_name, quantity, description, price)
-            VALUES (@BarCode, @Name, @NormalizedName, @Quantity, @Description, @Price)
+            INSERT INTO products (barcode, name, quantity, description, price)
+            VALUES (@BarCode, @Name, @Quantity, @Description, @Price)
             RETURNING id;
         ";
         var id = await connection.ExecuteScalarAsync<long>(sql, product);
@@ -63,7 +63,6 @@ public class ProductRepository : IProductRepository
             UPDATE products
             SET barcode = @BarCode,
                 name = @Name,
-                normalized_name = @NormalizedName,
                 quantity = @Quantity,
                 description = @Description,
                 price = @Price

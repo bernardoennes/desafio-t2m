@@ -3,17 +3,17 @@
 public class Product
 {
     public long Id { get; set; }
-    public string BarCode { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public int Quantity { get; set; }
-    public string Description { get; set; } = string.Empty;
-    public decimal Price { get; set; }
+    public string barcode { get; set; } = string.Empty;
+    public string name { get; set; } = string.Empty;
+    public int quantity { get; set; }
+    public string description { get; set; } = string.Empty;
+    public decimal price { get; set; }
 
     public Product() { }
 
-    public Product(string barCode, string name, int quantity, string description, decimal price)
+    public Product(string BarCode, string Name, int Quantity, string Description, decimal Price)
     {
-        BarCode = barCode;
+        BarCode = barcode;
         Name = name;
         Quantity = quantity;
         Description = description;

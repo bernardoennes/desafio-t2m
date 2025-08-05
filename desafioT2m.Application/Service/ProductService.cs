@@ -20,10 +20,11 @@ public class ProductService
         var products = await _repository.GetAll();
         return products.Select(p => new ProductDTO
         {
-            Name = p.Name,
-            Quantity = p.Quantity,
-            Description = p.Description,
-            Price = p.Price
+            barcode = p.barcode,
+            name = p.name,
+            quantity = p.quantity,
+            description = p.description,
+            price = p.price
         });
     }
 
@@ -33,25 +34,25 @@ public class ProductService
         if (product is null) return null;
         return new ProductDTO
         {
-            BarCode = product.BarCode,
-            Name = product.Name,
-            Quantity = product.Quantity,
-            Description = product.Description,
-            Price = product.Price
+            barcode = product.barcode,
+            name = product.name,
+            quantity = product.quantity,
+            description = product.description,
+            price = product.price
         };
     }
 
     public async Task AddProduct(ProductDTO productDto)
     {
-        if (string.IsNullOrWhiteSpace(productDto.BarCode))
+        if (string.IsNullOrWhiteSpace(productDto.barcode))
             throw new ArgumentException("O código de barras não pode estar vazio.");
 
         var product = new Product(
-            productDto.BarCode,
-            productDto.Name,
-            productDto.Quantity,
-            productDto.Description,
-            productDto.Price
+            productDto.barcode,
+            productDto.name,
+            productDto.quantity,
+            productDto.description,
+            productDto.price
         );
 
         await _repository.Add(product);
@@ -62,15 +63,15 @@ public class ProductService
             Product = productDto
         }, "product.created");
 
-        if (productDto.Quantity < 100)
+        if (productDto.quantity < 100)
         {
-            var status = productDto.Quantity < 10 ? "Crítico" : "Baixo";
+            var status = productDto.quantity < 10 ? "Crítico" : "Baixo";
             _rabbitProducer.Publish(new
             {
                 Event = "Alerta de Estoque",
-                ProductName = productDto.Name,
+                ProductName = productDto.name,
                 Status = status,
-                Quantity = productDto.Quantity
+                Quantity = productDto.quantity
             }, "product.stockalert");
         }
     }
@@ -81,11 +82,11 @@ public class ProductService
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
-        existing.BarCode = productDto.BarCode;
-        existing.Name = productDto.Name;
-        existing.Quantity = productDto.Quantity;
-        existing.Description = productDto.Description;
-        existing.Price = productDto.Price;
+        existing.barcode = productDto.barcode;
+        existing.name = productDto.name;
+        existing.quantity = productDto.quantity;
+        existing.description = productDto.description;
+        existing.price = productDto.price;
 
         await _repository.Update(existing);
 
@@ -95,15 +96,15 @@ public class ProductService
             Product = productDto
         }, "product.updated");
 
-        if (productDto.Quantity < 100)
+        if (productDto.quantity < 100)
         {
-            var status = productDto.Quantity < 10 ? "Crítico" : "Baixo";
+            var status = productDto.quantity < 10 ? "Crítico" : "Baixo";
             _rabbitProducer.Publish(new
             {
                 Event = "Alerta de Estoque",
-                ProductName = productDto.Name,
+                ProductName = productDto.name,
                 Status = status,
-                Quantity = productDto.Quantity
+                Quantity = productDto.quantity
             }, "product.stockalert");
         }
     }
@@ -121,10 +122,10 @@ public class ProductService
             Action = "deleted",
             Product = new ProductDTO
             {
-                Name = existing.Name,
-                Quantity = existing.Quantity,
-                Description = existing.Description,
-                Price = existing.Price
+                name = existing.name,
+                quantity = existing.quantity,
+                description = existing.description,
+                price = existing.price
             }
         }, "product.deleted");
     }

@@ -33,20 +33,26 @@ namespace desafio_t2m.Controller
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] ProductDTO dto)
         {
-            var existing = await _service.GetProductByBarCode(dto.BarCode);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var existing = await _service.GetProductByBarCode(dto.barcode);
             if (existing != null)
                 return Conflict("Já existe um produto com esse código de barras.");
 
             await _service.AddProduct(dto);
-            return CreatedAtAction(nameof(GetByBarCode), new { barCode = dto.BarCode }, dto);
+            return CreatedAtAction(nameof(GetByBarCode), new { barCode = dto.barcode }, dto);
         }
 
         [HttpPut("{barCode}")]
         public async Task<ActionResult> Update(string barCode, [FromBody] ProductDTO dto)
         {
-            if (!string.Equals(barCode, dto.BarCode, StringComparison.OrdinalIgnoreCase))
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!string.Equals(barCode, dto.barcode, StringComparison.OrdinalIgnoreCase))
             {
-                var other = await _service.GetProductByBarCode(dto.BarCode);
+                var other = await _service.GetProductByBarCode(dto.barcode);
                 if (other != null)
                     return Conflict("Já existe outro produto com esse código de barras.");
             }
