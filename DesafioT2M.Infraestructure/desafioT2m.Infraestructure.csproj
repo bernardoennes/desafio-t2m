@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
   	<PackageReference Include="Dapper" Version="2.1.66" />
 	<PackageReference Include="Npgsql" Version="9.0.3" />

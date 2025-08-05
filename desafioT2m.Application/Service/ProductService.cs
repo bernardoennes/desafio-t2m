@@ -1,8 +1,8 @@
 ﻿using desafioT2m.Domain;
 using desafioT2m.Dto;
-using desafioT2m.Infraestructure.RabbitMQ;
+using desafio_t2m.Utils;
 
-namespace desafioT2m.Service;
+namespace desafio_t2m.Service;
 
 public class ProductService
 {

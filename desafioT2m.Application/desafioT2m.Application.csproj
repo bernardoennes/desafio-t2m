@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\desafioT2m.Domain\desafioT2m.Domain.csproj" />
-    <ProjectReference Include="..\DesafioT2M.Infraestructure\desafioT2m.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>
