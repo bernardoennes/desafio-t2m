@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 using System.Text;
 using Xunit;
 
-namespace desafio_t2m.Tests;
+namespace desafioT2m.Tests.Integration;
 
 public class ProductTests : IClassFixture<WebApplicationFactory<Program>>
 {

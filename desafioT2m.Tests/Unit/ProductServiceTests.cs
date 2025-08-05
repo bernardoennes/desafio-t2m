@@ -4,7 +4,7 @@ using desafioT2m.Service;
 using desafioT2m.Infraestructure.RabbitMQ;
 using Moq;
 
-namespace desafio_t2m.ServiceTests;
+namespace desafioT2m.Tests.Unit;
 
 public class ProductServiceTests
 {

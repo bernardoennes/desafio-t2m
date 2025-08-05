@@ -29,7 +29,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\desafioT2m.Application\desafioT2m.Application.csproj" />
-		<ProjectReference Include="..\DesafioT2M.Infraestructure\desafioT2m.Infraestructure.csproj" />
 		<ProjectReference Include="..\desafioT2m.Presentation\desafioT2m.Presentation.csproj" />
 	</ItemGroup>
 
