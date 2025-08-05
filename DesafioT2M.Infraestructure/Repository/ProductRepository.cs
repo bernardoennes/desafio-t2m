@@ -1,13 +1,13 @@
-using Dapper;
-using desafio_t2m.Domain;
-using desafio_t2m.Utils;
+Ôªøusing Dapper;
+using desafioT2m.Domain;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Data;
 
 /* Glossario
-IEnumerable: Modelo generico que representa uma coleÁ„o de objetos do tipo especificado.
-Task: Variavel que representa uma operaÁ„o assÌncrona que pode ser aguardada.
-readonly: Indica que a propriedade È somente leitura, ou seja, n„o pode ser modificada apÛs a inicializaÁ„o.
+IEnumerable: Modelo generico que representa uma cole√ß√£o de objetos do tipo especificado.
+Task: Variavel que representa uma opera√ß√£o ass√≠ncrona que pode ser aguardada.
+readonly: Indica que a propriedade √© somente leitura, ou seja, n√£o pode ser modificada ap√≥s a inicializa√ß√£o.
 */
 
 public class ProductRepository : IProductRepository
@@ -34,15 +34,6 @@ public class ProductRepository : IProductRepository
         using var connection = CreateConnection();
         var sql = "SELECT * FROM products WHERE id = @Id";
         return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
-    }
-
-    public async Task<Product?> GetByName(string name)
-    {
-        using var connection = CreateConnection();
-        var normalizedName = NameNormalizer.Normalize(name);
-
-        var sql = "SELECT * FROM products WHERE normalized_name = @NormalizedName";
-        return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { NormalizedName = normalizedName });
     }
 
     public async Task<long> Add(Product product)

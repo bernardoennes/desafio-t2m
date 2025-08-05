@@ -1,4 +1,4 @@
-namespace desafio_t2m.Domain;
+﻿namespace desafioT2m.Domain;
 
 public class Product
 {
@@ -7,7 +7,6 @@ public class Product
     public int Quantity { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public string NormalizedName { get; set; } = "";
 
     public Product() { }
 
@@ -17,6 +16,5 @@ public class Product
         Quantity = quantity;
         Description = description;
         Price = price;
-        NormalizedName = Utils.NameNormalizer.Normalize(name);
     }
 }

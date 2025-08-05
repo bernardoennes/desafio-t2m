@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace desafio_t2m.Dto
+namespace desafioT2m.Dto
 {
     public class ProductDTO
     {
@@ -10,8 +10,10 @@ namespace desafio_t2m.Dto
         public decimal Price { get; set; }
 
         [JsonPropertyName("stockLevel")]
-        public string StockLevel {
-            get {
+        public string StockLevel
+        {
+            get
+            {
                 if (Quantity < 10)
                     return "Crítico";
                 if (Quantity < 100)

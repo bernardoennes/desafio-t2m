@@ -1,5 +1,5 @@
-using desafio_t2m.Domain;
-using desafio_t2m.Dto;
+Ôªøusing desafioT2m.Domain;
+using desafioT2m.Dto;
 using desafio_t2m.Utils;
 
 namespace desafio_t2m.Service;
@@ -43,7 +43,7 @@ public class ProductService
     public async Task AddProduct(ProductDTO productDto)
     {
         if (string.IsNullOrWhiteSpace(productDto.Name))
-            throw new ArgumentException("O Nome do Produto n„o pode estar vazio.");
+            throw new ArgumentException("O Nome do Produto n√£o pode estar vazio.");
 
         var product = new Product(
             productDto.Name,
@@ -62,7 +62,7 @@ public class ProductService
 
         if (productDto.Quantity < 100)
         {
-            var status = productDto.Quantity < 10 ? "CrÌtico" : "Baixo";
+            var status = productDto.Quantity < 10 ? "Cr√≠tico" : "Baixo";
             _rabbitProducer.Publish(new
             {
                 Event = "Alerta de Estoque",
@@ -77,13 +77,13 @@ public class ProductService
     {
         var existing = await _repository.GetByName(name);
         if (existing is null)
-            throw new InvalidOperationException("O Produto informado n„o foi encontrado.");
+            throw new InvalidOperationException("O Produto informado n√£o foi encontrado.");
 
         var normalizedNewName = NameNormalizer.Normalize(productDto.Name);
         var existingProduct = await _repository.GetByName(productDto.Name);
 
         if (existingProduct != null && existingProduct.Id != existing.Id)
-            throw new InvalidOperationException("J· existe um produto com esse nome.");
+            throw new InvalidOperationException("J√° existe um produto com esse nome.");
 
         existing.Name = productDto.Name;
         existing.NormalizedName = normalizedNewName;
@@ -101,7 +101,7 @@ public class ProductService
 
         if (productDto.Quantity < 100)
         {
-            var status = productDto.Quantity < 10 ? "CrÌtico" : "Baixo";
+            var status = productDto.Quantity < 10 ? "Cr√≠tico" : "Baixo";
             _rabbitProducer.Publish(new
             {
                 Event = "Alerta de Estoque",
@@ -116,7 +116,7 @@ public class ProductService
     {
         var existing = await _repository.GetByName(name);
         if (existing is null)
-            throw new InvalidOperationException("O Produto informado n„o foi encontrado.");
+            throw new InvalidOperationException("O Produto informado n√£o foi encontrado.");
 
         await _repository.Delete(existing.Id);
 

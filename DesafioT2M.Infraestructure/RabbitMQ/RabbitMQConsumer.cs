@@ -1,9 +1,11 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 
-namespace desafio_t2m.Messaging
+namespace desafioT2m.Infraestructure.RabbitMQ
 {
     public class RabbitMqConsumer : BackgroundService
     {
