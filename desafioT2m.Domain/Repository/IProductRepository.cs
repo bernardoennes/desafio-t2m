@@ -4,6 +4,7 @@ public interface IProductRepository
 {
     Task<IEnumerable<Product>> GetAll();
     Task<Product?> GetById(long id);
+    Task<Product?> GetByBarCode(string barCode);
     Task<long> Add(Product product);
     Task<bool> Update(Product product);
     Task<bool> Delete(long id);

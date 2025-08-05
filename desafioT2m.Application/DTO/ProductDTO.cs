@@ -4,6 +4,7 @@ namespace desafioT2m.Dto
 {
     public class ProductDTO
     {
+        public string BarCode { get; set; } = "";
         public string Name { get; set; } = "";
         public int Quantity { get; set; }
         public string Description { get; set; } = "";

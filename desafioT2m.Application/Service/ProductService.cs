@@ -1,8 +1,8 @@
 ﻿using desafioT2m.Domain;
 using desafioT2m.Dto;
-using desafio_t2m.Utils;
+using desafioT2m.Infraestructure.RabbitMQ;
 
-namespace desafio_t2m.Service;
+namespace desafioT2m.Service;
 
 public class ProductService
 {
@@ -27,12 +27,13 @@ public class ProductService
         });
     }
 
-    public async Task<ProductDTO?> GetProductByName(string name)
+    public async Task<ProductDTO?> GetProductByBarCode(string barCode)
     {
-        var product = await _repository.GetByName(name);
+        var product = await _repository.GetByBarCode(barCode);
         if (product is null) return null;
         return new ProductDTO
         {
+            BarCode = product.BarCode,
             Name = product.Name,
             Quantity = product.Quantity,
             Description = product.Description,
@@ -42,10 +43,11 @@ public class ProductService
 
     public async Task AddProduct(ProductDTO productDto)
     {
-        if (string.IsNullOrWhiteSpace(productDto.Name))
-            throw new ArgumentException("O Nome do Produto não pode estar vazio.");
+        if (string.IsNullOrWhiteSpace(productDto.BarCode))
+            throw new ArgumentException("O código de barras não pode estar vazio.");
 
         var product = new Product(
+            productDto.BarCode,
             productDto.Name,
             productDto.Quantity,
             productDto.Description,
@@ -73,20 +75,14 @@ public class ProductService
         }
     }
 
-    public async Task UpdateProduct(string name, ProductDTO productDto)
+    public async Task UpdateProduct(string barCode, ProductDTO productDto)
     {
-        var existing = await _repository.GetByName(name);
+        var existing = await _repository.GetByBarCode(barCode);
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
-        var normalizedNewName = NameNormalizer.Normalize(productDto.Name);
-        var existingProduct = await _repository.GetByName(productDto.Name);
-
-        if (existingProduct != null && existingProduct.Id != existing.Id)
-            throw new InvalidOperationException("Já existe um produto com esse nome.");
-
+        existing.BarCode = productDto.BarCode;
         existing.Name = productDto.Name;
-        existing.NormalizedName = normalizedNewName;
         existing.Quantity = productDto.Quantity;
         existing.Description = productDto.Description;
         existing.Price = productDto.Price;
@@ -112,9 +108,9 @@ public class ProductService
         }
     }
 
-    public async Task DeleteProduct(string name)
+    public async Task DeleteProduct(string barCode)
     {
-        var existing = await _repository.GetByName(name);
+        var existing = await _repository.GetByBarCode(barCode);
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 

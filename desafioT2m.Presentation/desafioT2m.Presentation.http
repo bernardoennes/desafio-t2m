@@ -1,0 +1,6 @@
+@desafioT2m.Presentation_HostAddress = http://localhost:5291
+
+GET {{desafioT2m.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

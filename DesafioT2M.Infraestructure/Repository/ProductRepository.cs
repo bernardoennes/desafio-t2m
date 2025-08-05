@@ -36,12 +36,19 @@ public class ProductRepository : IProductRepository
         return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
     }
 
+    public async Task<Product?> GetByBarCode(string barCode)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT * FROM products WHERE barcode = @BarCode";
+        return await connection.QueryFirstOrDefaultAsync<Product>(sql, new { BarCode = barCode });
+    }
+
     public async Task<long> Add(Product product)
     {
         using var connection = CreateConnection();
         var sql = @"
-            INSERT INTO products (name, normalized_name, quantity, description, price)
-            VALUES (@Name, @NormalizedName, @Quantity, @Description, @Price)
+            INSERT INTO products (barcode, name, normalized_name, quantity, description, price)
+            VALUES (@BarCode, @Name, @NormalizedName, @Quantity, @Description, @Price)
             RETURNING id;
         ";
         var id = await connection.ExecuteScalarAsync<long>(sql, product);
@@ -54,7 +61,8 @@ public class ProductRepository : IProductRepository
         using var connection = CreateConnection();
         var sql = @"
             UPDATE products
-            SET name = @Name,
+            SET barcode = @BarCode,
+                name = @Name,
                 normalized_name = @NormalizedName,
                 quantity = @Quantity,
                 description = @Description,
