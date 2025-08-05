@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace desafioT2m.Infraestructure.RabbitMQ
 {
-    public class RabbitMQProducer
+    public class RabbitMQProducer : IRabbitMQProducer
     {
         private readonly IModel _channel;
         private readonly string _exchange;

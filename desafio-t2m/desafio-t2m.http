@@ -1,6 +1,0 @@
-@desafio_t2m_HostAddress = http://localhost:5291
-
-GET {{desafio_t2m_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

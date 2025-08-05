@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Tests", "desafio_t2m.Tests\desafioT2m.Tests.csproj", "{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Domain", "desafioT2m.Domain\desafioT2m.Domain.csproj", "{1819EDAA-8D2B-4263-B5E7-A65FBD3940B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Application", "desafioT2m.Application\desafioT2m.Application.csproj", "{28E9067C-8498-46D2-B4F9-0B3830B8585D}"
@@ -13,16 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Infraestructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Presentation", "desafioT2m.Presentation\desafioT2m.Presentation.csproj", "{26DC4938-4110-4FE8-AAB4-2A28568CCC6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desafioT2m.Tests", "desafioT2m.Tests\desafioT2m.Tests.csproj", "{67B35BA7-DD8C-4A00-9529-9A2C685FCEF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9A94C51-43EE-4D34-A31C-CBD79AA9487A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1819EDAA-8D2B-4263-B5E7-A65FBD3940B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1819EDAA-8D2B-4263-B5E7-A65FBD3940B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1819EDAA-8D2B-4263-B5E7-A65FBD3940B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{26DC4938-4110-4FE8-AAB4-2A28568CCC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26DC4938-4110-4FE8-AAB4-2A28568CCC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26DC4938-4110-4FE8-AAB4-2A28568CCC6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B35BA7-DD8C-4A00-9529-9A2C685FCEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B35BA7-DD8C-4A00-9529-9A2C685FCEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B35BA7-DD8C-4A00-9529-9A2C685FCEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B35BA7-DD8C-4A00-9529-9A2C685FCEF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

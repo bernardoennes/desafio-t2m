@@ -9,6 +9,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
         builder.Services.AddScoped<ProductService>();
         builder.Services.AddSingleton<RabbitMQConnection>();
         builder.Services.AddScoped<RabbitMQProducer>();

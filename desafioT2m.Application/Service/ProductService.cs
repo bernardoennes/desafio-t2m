@@ -7,9 +7,9 @@ namespace desafioT2m.Service;
 public class ProductService
 {
     private readonly IProductRepository _repository;
-    private readonly RabbitMQProducer _rabbitProducer;
+    private readonly IRabbitMQProducer _rabbitProducer;
 
-    public ProductService(IProductRepository repository, RabbitMQProducer rabbitProducer)
+    public ProductService(IProductRepository repository, IRabbitMQProducer rabbitProducer)
     {
         _repository = repository;
         _rabbitProducer = rabbitProducer;
@@ -82,6 +82,12 @@ public class ProductService
         if (existing is null)
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
+        if (!string.Equals(barCode, productDto.barcode, StringComparison.OrdinalIgnoreCase))
+        {
+            var other = await _repository.GetByBarCode(productDto.barcode);
+            if (other != null)
+                throw new InvalidOperationException("Já existe outro produto com esse código de barras.");
+        }
         existing.barcode = productDto.barcode;
         existing.name = productDto.name;
         existing.quantity = productDto.quantity;

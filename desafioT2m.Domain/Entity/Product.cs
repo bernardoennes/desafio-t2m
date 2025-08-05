@@ -11,12 +11,12 @@ public class Product
 
     public Product() { }
 
-    public Product(string BarCode, string Name, int Quantity, string Description, decimal Price)
+    public Product(string barcode, string name, int quantity, string description, decimal price)
     {
-        BarCode = barcode;
-        Name = name;
-        Quantity = quantity;
-        Description = description;
-        Price = price;
+        this.barcode = barcode;
+        this.name = name;
+        this.quantity = quantity;
+        this.description = description;
+        this.price = price;
     }
 }
