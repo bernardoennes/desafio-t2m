@@ -59,6 +59,18 @@ public class ProductService
             Action = "created",
             Product = productDto
         }, "product.created");
+
+        if (productDto.Quantity < 100)
+        {
+            var status = productDto.Quantity < 10 ? "Crítico" : "Baixo";
+            _rabbitProducer.Publish(new
+            {
+                Event = "EstoqueAlerta",
+                ProductName = productDto.Name,
+                Status = status,
+                Quantity = productDto.Quantity
+            }, "product.stockalert");
+        }
     }
 
     public async Task UpdateProduct(string name, ProductDTO productDto)
@@ -86,6 +98,18 @@ public class ProductService
             Action = "updated",
             Product = productDto
         }, "product.updated");
+
+        if (productDto.Quantity < 100)
+        {
+            var status = productDto.Quantity < 10 ? "Crítico" : "Baixo";
+            _rabbitProducer.Publish(new
+            {
+                Event = "Alerta de Estoque",
+                ProductName = productDto.Name,
+                Status = status,
+                Quantity = productDto.Quantity
+            }, "product.stockalert");
+        }
     }
 
     public async Task DeleteProduct(string name)

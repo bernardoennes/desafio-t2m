@@ -40,6 +40,7 @@ namespace desafio_t2m.Messaging
 
             _channel.QueueBind(_queueName, "product_exchange", "product.created");
             _channel.QueueBind(_queueName, "product_exchange", "product.deleted");
+            _channel.QueueBind(_queueName, "product_exchange", "product.stockalert");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
