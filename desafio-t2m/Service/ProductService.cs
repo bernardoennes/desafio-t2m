@@ -58,7 +58,7 @@ public class ProductService
         {
             Action = "created",
             Product = productDto
-        });
+        }, "product.created");
     }
 
     public async Task UpdateProduct(string name, ProductDTO productDto)
@@ -80,11 +80,12 @@ public class ProductService
         existing.Price = productDto.Price;
 
         await _repository.Update(existing);
+
         _rabbitProducer.Publish(new
         {
             Action = "updated",
             Product = productDto
-        });
+        }, "product.updated");
     }
 
     public async Task DeleteProduct(string name)
@@ -94,6 +95,7 @@ public class ProductService
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
         await _repository.Delete(existing.Id);
+
         _rabbitProducer.Publish(new
         {
             Action = "deleted",
@@ -104,6 +106,6 @@ public class ProductService
                 Description = existing.Description,
                 Price = existing.Price
             }
-        });
+        }, "product.deleted");
     }
 }

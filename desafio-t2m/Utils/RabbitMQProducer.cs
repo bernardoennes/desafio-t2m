@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 
 namespace desafio_t2m.Utils
@@ -7,23 +8,30 @@ namespace desafio_t2m.Utils
     public class RabbitMQProducer
     {
         private readonly IModel _channel;
-        private readonly string _queueName;
+        private readonly string _exchange;
 
         public RabbitMQProducer(RabbitMQConnection connection, IConfiguration config)
         {
             _channel = connection.GetChannel();
-            _queueName = config["RabbitMQ:QueueName"] 
-                ?? throw new ArgumentNullException(nameof(config), "QueueName não pode ser nulo.");
+            _exchange = config["RabbitMQ:Exchange"] ?? "product_exchange";
+            _channel.ExchangeDeclare(exchange: _exchange, type: ExchangeType.Direct, durable: true);
         }
 
-        public void Publish<T>(T message)
+        public void Publish<T>(T message, string routingKey)
         {
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
-            _channel.BasicPublish(exchange: "",
-                                  routingKey: _queueName,
-                                  basicProperties: null,
-                                  body: body);
+            var props = _channel.CreateBasicProperties();
+            props.Persistent = true;
+
+            _channel.BasicPublish(
+                exchange: _exchange,
+                routingKey: routingKey,
+                basicProperties: props,
+                body: body
+            );
+
+            Console.WriteLine($"[✔] Mensagem publicada - RoutingKey: {routingKey}");
         }
     }
 }

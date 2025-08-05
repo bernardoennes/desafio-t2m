@@ -28,6 +28,8 @@ namespace desafio_t2m.Messaging
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
+            _channel.ExchangeDeclare("product_exchange", ExchangeType.Direct, durable: true);
+
             _channel.QueueDeclare(
                 queue: _queueName,
                 durable: true,
@@ -35,6 +37,9 @@ namespace desafio_t2m.Messaging
                 autoDelete: false,
                 arguments: null
             );
+
+            _channel.QueueBind(_queueName, "product_exchange", "product.created");
+            _channel.QueueBind(_queueName, "product_exchange", "product.deleted");
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
