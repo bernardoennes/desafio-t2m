@@ -20,6 +20,7 @@ namespace desafioT2m.Infraestructure.RabbitMQ
             _queueName = _configuration["RabbitMQ:QueueName"] ?? "products-queue";
 
             var factory = new ConnectionFactory
+            {
                 HostName = _configuration["RabbitMQ:HostName"],
                 UserName = _configuration["RabbitMQ:UserName"],
                 Password = _configuration["RabbitMQ:Password"],
