@@ -1,4 +1,6 @@
 using desafio_t2m.Service;
+using desafio_t2m.Utils;
+using desafio_t2m.Messaging;
 
 public class Program
 {
@@ -9,6 +11,9 @@ public class Program
         // Add services to the container.
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ProductService>();
+        builder.Services.AddSingleton<RabbitMQConnection>();
+        builder.Services.AddScoped<RabbitMQProducer>();
+        builder.Services.AddHostedService<RabbitMqConsumer>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddControllers();

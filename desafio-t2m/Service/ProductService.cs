@@ -7,10 +7,12 @@ namespace desafio_t2m.Service;
 public class ProductService
 {
     private readonly IProductRepository _repository;
+    private readonly RabbitMQProducer _rabbitProducer;
 
-    public ProductService(IProductRepository repository)
+    public ProductService(IProductRepository repository, RabbitMQProducer rabbitProducer)
     {
         _repository = repository;
+        _rabbitProducer = rabbitProducer;
     }
 
     public async Task<IEnumerable<ProductDTO>> GetAllProducts()
@@ -51,6 +53,12 @@ public class ProductService
         );
 
         await _repository.Add(product);
+
+        _rabbitProducer.Publish(new
+        {
+            Action = "created",
+            Product = productDto
+        });
     }
 
     public async Task UpdateProduct(string name, ProductDTO productDto)
@@ -65,13 +73,18 @@ public class ProductService
         if (existingProduct != null && existingProduct.Id != existing.Id)
             throw new InvalidOperationException("Já existe um produto com esse nome.");
 
-    existing.Name = productDto.Name;
-    existing.NormalizedName = normalizedNewName;
-    existing.Quantity = productDto.Quantity;
-    existing.Description = productDto.Description;
-    existing.Price = productDto.Price;
+        existing.Name = productDto.Name;
+        existing.NormalizedName = normalizedNewName;
+        existing.Quantity = productDto.Quantity;
+        existing.Description = productDto.Description;
+        existing.Price = productDto.Price;
 
         await _repository.Update(existing);
+        _rabbitProducer.Publish(new
+        {
+            Action = "updated",
+            Product = productDto
+        });
     }
 
     public async Task DeleteProduct(string name)
@@ -81,5 +94,16 @@ public class ProductService
             throw new InvalidOperationException("O Produto informado não foi encontrado.");
 
         await _repository.Delete(existing.Id);
+        _rabbitProducer.Publish(new
+        {
+            Action = "deleted",
+            Product = new ProductDTO
+            {
+                Name = existing.Name,
+                Quantity = existing.Quantity,
+                Description = existing.Description,
+                Price = existing.Price
+            }
+        });
     }
 }
