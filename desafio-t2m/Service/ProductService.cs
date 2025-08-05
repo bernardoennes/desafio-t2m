@@ -65,7 +65,7 @@ public class ProductService
             var status = productDto.Quantity < 10 ? "Crítico" : "Baixo";
             _rabbitProducer.Publish(new
             {
-                Event = "EstoqueAlerta",
+                Event = "Alerta de Estoque",
                 ProductName = productDto.Name,
                 Status = status,
                 Quantity = productDto.Quantity
