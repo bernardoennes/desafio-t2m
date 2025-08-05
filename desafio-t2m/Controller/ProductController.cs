@@ -1,5 +1,5 @@
-﻿using desafio_t2m.Dto;
-using desafio_t2m.Service;
+﻿using desafioT2m.Dto;
+using desafioT2m.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace desafio_t2m.Controller {

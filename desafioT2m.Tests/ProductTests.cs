@@ -1,5 +1,5 @@
 using desafio_t2m;
-using desafio_t2m.Dto;
+using desafioT2m.Dto;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
